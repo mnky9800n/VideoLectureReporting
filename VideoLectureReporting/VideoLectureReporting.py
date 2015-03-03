@@ -30,8 +30,10 @@ def welcome_msg():
     choice = raw_input(">>> ")
 
     if choice == "1":
-        db_name = raw_input("\nDatabase name: ")
-        v = VideoViewTable(db_name)
+        #db_name = raw_input("\nDatabase name: ")
+        #v = VideoViewTable(db_name)
+        v = VideoViewTable()
+        v.choose_database()
         v.CreateVideoViewTable()
         raw_input("    Press any key to continue . . .")
         welcome_msg()
@@ -48,7 +50,7 @@ def welcome_msg():
         raw_input("    Press any key to continue . . .")
         welcome_msg()
 
-    if choice == "4":
+    elif choice == "4":
         print "\n    Goodbye.\n"
         
 

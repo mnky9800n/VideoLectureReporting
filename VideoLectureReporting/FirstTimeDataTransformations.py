@@ -33,8 +33,19 @@ class VideoViewTable:
 
     """
 
-    def __init__(self, database_name):
-        self._database_name = database_name
+    #def __init__(self, database_name):
+    def __init__(self):
+        self._database_name = ''
+        self._conn_str = 'mssql://WIN-2TMF2VILQ8A/spring_2014_blended?trusted_connection=yes'#.format(self._database_name)
+        self._engine = sqlalchemy.create_engine(self._conn_str)
+        self._conn = self._engine.raw_connection()
+    
+    def choose_database(self):
+        print ''
+        for db in self._engine.execute("select name from master.sys.sysdatabases"):
+            print db[0]
+        print ''
+        self._database_name = raw_input("\nChoose a database to use: ")
         self._conn_str = 'mssql://WIN-2TMF2VILQ8A/{0}?trusted_connection=yes'.format(self._database_name)
         self._engine = sqlalchemy.create_engine(self._conn_str)
         self._conn = self._engine.raw_connection()
