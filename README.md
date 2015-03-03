@@ -1,4 +1,4 @@
-# VideoLectureReporting
+# Video Lecture Reporting
 
 This module is built to provide generic reporting capabilities for video viewing behavior on the Coursera Course Management Platform. VideoLectureReporting has two functions:
 
