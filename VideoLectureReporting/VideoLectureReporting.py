@@ -1,6 +1,10 @@
 
 from FirstTimeDataTransformations import VideoViewTable
 from Helpers import *
+from db_connection import DatabaseConnection
+from Reporter import *
+
+db = DatabaseConnection()
 
 def welcome_msg():
     print """
@@ -32,14 +36,17 @@ def welcome_msg():
     if choice == "1":
         #db_name = raw_input("\nDatabase name: ")
         #v = VideoViewTable(db_name)
-        v = VideoViewTable()
-        v.choose_database()
+        db.choose_database()
+        v = VideoViewTable(db.database_name, db.conn)
+        #v.choose_database()
         v.CreateVideoViewTable()
         raw_input("    Press any key to continue . . .")
         welcome_msg()
 
     elif choice == "2":
-        print "    this feature has not been implemented"
+        #print "    this feature has not been implemented"
+        print "\nThis will take a few minutes. . .\n"
+        do()
         raw_input("\n    Press any key to continue . . .\n")
 
         welcome_msg()

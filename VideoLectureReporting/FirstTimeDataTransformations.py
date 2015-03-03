@@ -1,6 +1,8 @@
 
 import sqlalchemy
+from db_connection import DatabaseConnection
 
+db = DatabaseConnection()
 
 class VideoViewTable:
 
@@ -20,10 +22,6 @@ class VideoViewTable:
 
     // TODO
 
-    1) make sure this works for any database from Coursera (see below since this isn't an action item)
-
-    1.5) make it get all database names and give user option to use databases
-
     2) create start up query for new version of 
     [fall_2013_blended].[dbo].[SY_published_lecture_metadata_combined]
 
@@ -33,22 +31,11 @@ class VideoViewTable:
 
     """
 
-    #def __init__(self, database_name):
-    def __init__(self):
-        self._database_name = ''
-        self._conn_str = 'mssql://WIN-2TMF2VILQ8A/spring_2014_blended?trusted_connection=yes'#.format(self._database_name)
-        self._engine = sqlalchemy.create_engine(self._conn_str)
-        self._conn = self._engine.raw_connection()
-    
-    def choose_database(self):
-        print ''
-        for db in self._engine.execute("select name from master.sys.sysdatabases"):
-            print db[0]
-        print ''
-        self._database_name = raw_input("\nChoose a database to use: ")
-        self._conn_str = 'mssql://WIN-2TMF2VILQ8A/{0}?trusted_connection=yes'.format(self._database_name)
-        self._engine = sqlalchemy.create_engine(self._conn_str)
-        self._conn = self._engine.raw_connection()
+    def __init__(self, database_name, dbConn):
+        self._database_name = database_name
+        self.conn = dbConn
+
+
 
     def Creator(self, debug=False):
         
@@ -118,8 +105,8 @@ class VideoViewTable:
             print ''
             print ''
 
-        self._conn.execute(_Create_Video_View_Table_Query)
-        self._conn.commit()
+        self.conn.execute(_Create_Video_View_Table_Query)
+        self.conn.commit()
 
     def CreateVideoViewTable(self):
 
@@ -134,7 +121,9 @@ class VideoViewTable:
         work.
         """
 
-        if self._engine.has_table(u'Video Views') is True:
+        #if self._engine.has_table(u'Video Views') is True:
+        if db._engine.has_table(u'Video Views') is True:
+
             print "First time operations have already been performed.\n"
             
             if raw_input("Would you like to continue first time operations? (y/n) ") == "y":
@@ -151,5 +140,5 @@ class VideoViewTable:
             print "\nGoodbye.\n"
             
 if __name__ == "__main__":
-    v = VideoViewTable('spring_2014_blended')
+    v = VideoViewTable()
     v.CreateVideoViewTable()

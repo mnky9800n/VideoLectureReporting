@@ -1,3 +1,10 @@
+#TODO
+#
+# 1) add sql connection here to share it with other classes so they don't need their own versions
+#
+# 2) create GraphingUtilities class (needs lecture/lab attributes, x label generator,  color map generator, etc.)
+
+
 
 """
 so far nothing here.

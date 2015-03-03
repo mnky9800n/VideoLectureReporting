@@ -22,7 +22,13 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="db_connection.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="FirstTimeDataTransformations.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GraphingUtilities.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Helpers.py">
@@ -32,6 +38,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="VideoLectureReporting.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="images\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
