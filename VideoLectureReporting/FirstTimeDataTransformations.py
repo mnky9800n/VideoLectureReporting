@@ -1,17 +1,6 @@
 
 import sqlalchemy
 
-#"""
-#Put the table creation Query here.
-#"""
-# TODO:
-#
-# 1) create database name variable and replace all query
-#    instances with database name variable
-#
-# 2) replace all instances of [Fall_2013_blended] with 
-#    static version of queried data
-#
 
 class VideoViewTable:
 
@@ -28,6 +17,20 @@ class VideoViewTable:
     SQL Server Migration Assistant. You can learn more about
     SSMA  at:
     https://msdn.microsoft.com/en-us/library/hh313129(v=sql.110).aspx
+
+    // TODO
+
+    1) make sure this works for any database from Coursera (see below since this isn't an action item)
+
+    1.5) make it get all database names and give user option to use databases
+
+    2) create start up query for new version of 
+    [fall_2013_blended].[dbo].[SY_published_lecture_metadata_combined]
+
+    3) test of fall_2013_blended, mooc data
+
+    4) create version for mysql
+
     """
 
     def __init__(self, database_name):
@@ -36,7 +39,7 @@ class VideoViewTable:
         self._engine = sqlalchemy.create_engine(self._conn_str)
         self._conn = self._engine.raw_connection()
 
-    def Creator(self):
+    def Creator(self, debug=False):
         
         """
         Executes the Creation query that drops [Video Views]
@@ -48,24 +51,16 @@ class VideoViewTable:
         
         SET NOCOUNT ON
 
-        /****** Script for Create table for video analytics ******/
-        --USE {0}
-        --GO
-
         /****** Object:  Table [dbo].[Video Views]    Script Date: 2/27/2015 10:21:52 AM ******/
         SET ANSI_NULLS ON
-        --GO
 
         SET QUOTED_IDENTIFIER ON
-        --GO
 
         SET ANSI_PADDING ON
-        --GO
 
         /****** Script for Dropping [Video Views] if it exists  ******/
         IF OBJECT_ID('[dbo].[Video Views]', 'U') IS NOT NULL
 	        DROP TABLE [dbo].[Video Views]
-        --GO
 
 
         CREATE TABLE [dbo].[Video Views](
@@ -77,10 +72,7 @@ class VideoViewTable:
 	        [Submission Date] date NULL
         ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
-        --GO
-
         SET ANSI_PADDING OFF
-        --GO
 
 
         /****** Script for Create Table Variable for video order ******/
@@ -108,13 +100,12 @@ class VideoViewTable:
             on vidorder.original_item_id = meta.id_blended
             where u.access_group_id = 4
 
-
-        --GO
         """.format('[' + str(self._database_name) + ']')
 
-        #print Create_Video_View_Table_Query
-        #print ''
-        #print ''
+        if debug == True:
+            print Create_Video_View_Table_Query
+            print ''
+            print ''
 
         self._conn.execute(_Create_Video_View_Table_Query)
         self._conn.commit()
@@ -151,4 +142,3 @@ class VideoViewTable:
 if __name__ == "__main__":
     v = VideoViewTable('spring_2014_blended')
     v.CreateVideoViewTable()
-    #CreateVideoViewTable('spring_2014_blended')
