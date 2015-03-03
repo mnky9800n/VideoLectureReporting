@@ -9,4 +9,5 @@ VideoLectureReporting has two functions:
 2) It generates a report of the data for dissemination
 
 More features may be added later to process and visualize clickstream
-data.
+data. This module is primarily used for the Georgia Tech Introductory
+Physics MOOC but it may be used for other Coursera courses.
