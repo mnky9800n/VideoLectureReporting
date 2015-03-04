@@ -2,9 +2,12 @@
 from FirstTimeDataTransformations import VideoViewTable
 from Helpers import *
 from db_connection import DatabaseConnection
-from Reporter import *
+from GraphGenerator import *
+from LatexReportGenerator import *
 
 db = DatabaseConnection()
+LR = LatexReport()
+
 
 def welcome_msg():
     print """
@@ -40,13 +43,14 @@ def welcome_msg():
         v = VideoViewTable(db.database_name, db.conn)
         #v.choose_database()
         v.CreateVideoViewTable()
-        raw_input("    Press any key to continue . . .")
+        raw_input("\n    Press any key to continue . . .\n")
         welcome_msg()
 
     elif choice == "2":
         #print "    this feature has not been implemented"
         print "\nThis will take a few minutes. . .\n"
         do()
+        LR.Generate()
         raw_input("\n    Press any key to continue . . .\n")
 
         welcome_msg()
@@ -54,7 +58,7 @@ def welcome_msg():
     elif choice == "3":
         p = Picard()
         p.get_picard()
-        raw_input("    Press any key to continue . . .")
+        raw_input("\n    Press any key to continue . . .\n")
         welcome_msg()
 
     elif choice == "4":

@@ -34,7 +34,13 @@
     <Compile Include="Helpers.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Reporter.py">
+    <Compile Include="GraphGenerator.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LatexReportGenerator.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ReportGenerator.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="VideoLectureReporting.py" />

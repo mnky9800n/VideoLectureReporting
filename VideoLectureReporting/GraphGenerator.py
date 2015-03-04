@@ -1,4 +1,11 @@
 
+## TODO
+## 1) make this work for any database.
+##
+## 2) check for [Video Views] in active db
+##
+## 3) build each graph separately
+
 def do():
     import pandas as pd
     import numpy as np
@@ -88,7 +95,7 @@ def do():
 
     x = get_xlabels(15)
 
-    def savefigure(figureobj, name, filetype):
+    def savefigure(figureobj, name, filetype='.png'):
         fig = figureobj #plt.gcf()
         #fig.savefig('/images/'+name)
         fig.savefig("C:\Users\Administrator\Google Drive\code learning\VideoLectureReporting\VideoLectureReporting\images\\" + name + filetype)
@@ -101,6 +108,7 @@ def do():
     N_video = timeline_df.sum()[0]+timeline_df.sum()[1]
 
     ax = timeline_df.plot(kind='bar', figsize=(18,5), color=('crimson','0.75'), grid=False, width=1.0, edgecolor='white')
+    fig = ax.get_figure()
     ax.set_xticklabels(x)
     ax.set_title(r'Fall 2013 Video Accesses ($N_{Accesses}$='+str(N_video)+')')
     ax.set_ylabel('N Accesses')
@@ -112,7 +120,8 @@ def do():
     #ax.text(54.5, 50, 'Fall\nBreak', bbox={'facecolor':'white', 'alpha':1.0, 'pad':5})
     ax.set_title(r'Fall 2013 Video Accesses ($N_{Accesses}$='+str(int(N_video))+')')
     ax.set_ylabel('N Accesses')
-    savefigure(plt.gcf(),'timeline','.svg')
+    savefigure(plt.gcf(),'timeline')#,'.svg')
+    plt.close(fig)
 
 
     # In[5]:
@@ -179,8 +188,8 @@ def do():
     ax2.set_xlabel('Videos in Assigned Order (78 videos)', fontsize=25)
     ax2.set_ylabel('Fraction of Class Accessing', fontsize=20)
 
-    savefigure(plt.gcf(),'fractionAccessing','.svg')
-
+    savefigure(plt.gcf(),'fractionAccessing')#,'.svg')
+    plt.close()
 
     # In[59]:
 
@@ -371,7 +380,8 @@ def do():
     ax.set_ylabel(r'Class Fraction (N='+str(cnt_unq_df.shape[0])+')')
     ax.set_xlabel(r'Access Fraction (N='+str(cnt_unq_df['Count Accesses - Laboratory'].sum())+')')
 
-    savefigure(plt.gcf(),'fourbyfour','.svg')
+    savefigure(plt.gcf(),'fourbyfour')#,'.svg')
+    plt.close()
 
     # In[312]:
 
@@ -436,7 +446,8 @@ def do():
     plt.bar([0],[0],color='white')
     plt.legend(['Access', 'No Access'], loc='lower right')
 
-    savefigure(plt.gcf(),'heatmap','.svg')
+    savefigure(plt.gcf(),'heatmap')#,'.svg')
+    plt.close()
 
 
     # In[212]:
@@ -494,6 +505,8 @@ def do():
 
     #plt.legend(['Lab Video', 'Midterm Exam', 'Lab Due Date'], loc='upper left')#,bbox_to_anchor=(1.05, 1), borderaxespad=0.)
 
-    savefigure(plt.gcf(),'binarymap','.svg')
+    savefigure(plt.gcf(),'binarymap')#,'.svg')
 
 
+if __name__ == "__main__":
+    do()
