@@ -1,7 +1,7 @@
 
 from FirstTimeDataTransformations import VideoViewTable
 from Helpers import *
-from db_connection import DatabaseConnection
+from DatabaseConnection import DatabaseConnection
 from GraphGenerator import *
 from LatexReportGenerator import *
 
