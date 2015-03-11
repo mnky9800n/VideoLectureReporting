@@ -18,7 +18,6 @@ def do():
     db = DatabaseConnection()
 
 
-
     engine = sqlalchemy.create_engine('mssql://WIN-2TMF2VILQ8A/spring_2014_blended?trusted_connection=yes')
 
     Spring_data = pd.read_sql("SELECT * FROM [Video Views]", engine)
@@ -446,7 +445,7 @@ def do():
     plt.bar([0],[0],color='white')
     plt.legend(['Access', 'No Access'], loc='lower right')
 
-    savefigure(plt.gcf(),'heatmap')#,'.svg')
+    savefigure(plt.gcf(),'binarymap')#,'.svg')
     plt.close()
 
 
@@ -505,7 +504,7 @@ def do():
 
     #plt.legend(['Lab Video', 'Midterm Exam', 'Lab Due Date'], loc='upper left')#,bbox_to_anchor=(1.05, 1), borderaxespad=0.)
 
-    savefigure(plt.gcf(),'binarymap')#,'.svg')
+    savefigure(plt.gcf(),'heatmap')#,'.svg')
 
 
 if __name__ == "__main__":

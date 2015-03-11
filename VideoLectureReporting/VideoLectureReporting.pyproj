@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>37531c50-1b4a-458d-bcd7-75cedcce76d9</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>VideoLectureReporting.py</StartupFile>
+    <StartupFile>experimental\ClickstreamImport.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -25,6 +25,9 @@
     <Compile Include="DatabaseConnection.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="experimental\ClickstreamImport.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="FirstTimeDataTransformations.py">
       <SubType>Code</SubType>
     </Compile>
@@ -40,10 +43,14 @@
     <Compile Include="LatexReportGenerator.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="experimental\LocationMap.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="VideoLectureReporting.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />
+    <Folder Include="experimental\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
