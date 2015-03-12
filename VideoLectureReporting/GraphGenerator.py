@@ -14,7 +14,7 @@ def do():
     import sqlalchemy
     import matplotlib.pyplot as plt
     from GraphingUtilities import GraphingUtilities
-    from db_connection import DatabaseConnection
+    from DatabaseConnection import DatabaseConnection
 
     GU = GraphingUtilities()
     db = DatabaseConnection()

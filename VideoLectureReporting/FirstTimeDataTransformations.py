@@ -1,6 +1,6 @@
 
 import sqlalchemy
-from db_connection import DatabaseConnection
+from DatabaseConnection import DatabaseConnection
 
 db = DatabaseConnection()
 

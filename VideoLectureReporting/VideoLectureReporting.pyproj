@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>37531c50-1b4a-458d-bcd7-75cedcce76d9</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>experimental\ClickstreamImport.py</StartupFile>
+    <StartupFile>GraphGeneration\Data.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -31,19 +31,25 @@
     <Compile Include="FirstTimeDataTransformations.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GraphGeneration\GraphData.py">
+    <Compile Include="GraphGeneration\Generator.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GraphGeneration\GraphGenerator.py">
+    <Compile Include="GraphGeneration\Data.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GraphingUtilities.py">
+    <Compile Include="GraphGeneration\Graph.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Helpers.py">
+    <Compile Include="GraphGeneration\GraphingUtilities.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\Helpers.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GraphGenerator.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="LatexReportGenerator.py">
@@ -58,6 +64,7 @@
     <Folder Include="images\" />
     <Folder Include="experimental\" />
     <Folder Include="GraphGeneration\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
