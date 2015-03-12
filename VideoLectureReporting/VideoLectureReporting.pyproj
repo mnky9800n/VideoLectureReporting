@@ -31,6 +31,12 @@
     <Compile Include="FirstTimeDataTransformations.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GraphGeneration\GraphData.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GraphGeneration\GraphGenerator.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GraphingUtilities.py">
       <SubType>Code</SubType>
     </Compile>
@@ -51,6 +57,7 @@
   <ItemGroup>
     <Folder Include="images\" />
     <Folder Include="experimental\" />
+    <Folder Include="GraphGeneration\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
