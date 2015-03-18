@@ -12,8 +12,8 @@ class DatabaseConnection:
     def __init__(self):
         self.database_name = ''
         self._conn_str = 'mssql://WIN-2TMF2VILQ8A/spring_2014_blended?trusted_connection=yes'#.format(self._database_name)
-        self.engine = sqlalchemy.createengine(self._conn_str)
-        self._conn = self.engine.raw_connection()
+        self.engine = sqlalchemy.create_engine(self._conn_str)
+        self.conn = self.engine.raw_connection()
     
     def choose_database(self):
 
@@ -29,5 +29,10 @@ class DatabaseConnection:
         print ''
         self.database_name = raw_input("\nChoose a database to use: ")
         self._conn_str = 'mssql://WIN-2TMF2VILQ8A/{0}?trusted_connection=yes'.format(self.database_name)
-        self.engine = sqlalchemy.createengine(self._conn_str)
+        self.engine = sqlalchemy.create_engine(self._conn_str)
         self.conn = self.engine.raw_connection()
+
+if __name__=="__main__":
+    db = DatabaseConnection()
+    db.choose_database()
+

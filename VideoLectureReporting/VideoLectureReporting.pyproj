@@ -22,7 +22,10 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DatabaseConnection.py">
+    <Compile Include="GraphGeneration\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GraphGeneration\DatabaseConnection.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="experimental\ClickstreamImport.py">
@@ -43,13 +46,7 @@
     <Compile Include="GraphGeneration\GraphingUtilities.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Helpers\Helpers.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="GraphGenerator.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Helpers\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="LatexReportGenerator.py">
@@ -58,13 +55,18 @@
     <Compile Include="experimental\LocationMap.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tester.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="VideoLectureReporting.py" />
+    <Compile Include="__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />
     <Folder Include="experimental\" />
     <Folder Include="GraphGeneration\" />
-    <Folder Include="Helpers\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

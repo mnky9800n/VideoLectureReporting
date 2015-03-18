@@ -13,8 +13,7 @@ import numpy as np
 import sqlalchemy
 import matplotlib.pyplot as plt
 from GraphingUtilities import GraphingUtilities
-from DatabaseConnection import DatabaseConnection
-
+from GraphingUtilities import DatabaseConnection
 
 GU = GraphingUtilities()
 db = DatabaseConnection()
@@ -27,75 +26,12 @@ class Data:
         self.lecture_order = GU.lecture_order #order of videos as they are assigned
         self.lab_order = GU.lab_order
 
-    #engine = sqlalchemy.create_engine('mssql://WIN-2TMF2VILQ8A/spring_2014_blended?trusted_connection=yes')
-
-    #Spring_data = pd.read_sql("SELECT * FROM [Video Views]", engine)
-
     def get_semester_day_count(self):
         """
         This will eventually get the semester day count
         for the get_pivot_date_range method
         """
 
-#    def get_pivot_date_range(dataframe, semester_day_count=119):
-#        """
-#        We need a full date range for the pivot 
-#        table in SQL to create the date columns.
-    
-#        NOTE: the date range is truncated based
-#        on the semester days. This is due to
-#        students sometimes watching videos much
-#        later than the end of the semester.
-
-#        semester_day_count is set to 119 however
-#        this is not a set number and it will 
-#        fluctuate from semester to semester.
-#        """
-
-#        daterange = '('
-#        for d in pd.date_range(dataframe['Submission Date'].min(), dataframe['Submission Date'].max()):
-#            daterange += '[' + str(d).split(' ')[0] + '],'
-    
-#        return daterange[:semester_day_count*13] +')'
-
-#    def pivot_query(labs):
-#        """
-#        Videos have a 'Lab Number' designation.
-#        Videos with (Lab Number = -1) are not
-#        associated with a lab and generally
-#        referred to as 'Lecture Videos'. Videos
-#        with (Lab Number > -1) are either associated
-#        with lab practices (Lab Number == 0) or with 
-#        specific labs (Lab Number == [1,2,3,4]) where
-#        the number indicates the specific lab.
-#        """
-    
-#        query = """
-#        SET NOCOUNT ON
-#        select *
-#        from
-#        (
-#        SELECT [Submission Date]
-#        , [session_user_id]
-#            FROM [spring_2014_blended].[dbo].[Video Views]
-#            WHERE [Lab Number] {0}
-#        ) as srctable
-#        PIVOT
-#        (
-#        count([Submission Date])
-#        FOR [Submission Date] in {1}
-#        ) as pivottable""".format(labs, get_pivot_date_range(self.raw_data, 119))
-#        return query
-
-
-
-
-## Get Data, create single dataframe
-#Spring_Date_pivot_labs = pd.read_sql(pivot_query('=-1'), engine).transpose()[1:119].transpose()
-#Spring_Date_pivot_lect = pd.read_sql(pivot_query('>-1'), engine).transpose()[1:119].transpose()
-#Spring_timeline = pd.DataFrame({'Lecture':Spring_Date_pivot_labs.sum()
-#                                ,'Laboratory':Spring_Date_pivot_lect.sum()})
-    
     def timeline_df(self):
 
         """
@@ -116,8 +52,9 @@ class Data:
         fluctuate from semester to semester.
         """
 
+        semester_day_count = 119
         daterange = '('
-        for d in pd.date_range(raw_data['Submission Date'].min(), raw_data['Submission Date'].max()):
+        for d in pd.date_range(self.raw_data['Submission Date'].min(), self.raw_data['Submission Date'].max()):
             daterange += '[' + str(d).split(' ')[0] + '],'
     
         daterange = daterange[:semester_day_count*13] +')'
@@ -136,7 +73,7 @@ class Data:
             specific labs (Lab Number == [1,2,3,4]) where
             the number indicates the specific lab.
             """
-    
+            '''
             query = """
             SET NOCOUNT ON
             select *
@@ -144,7 +81,7 @@ class Data:
             (
             SELECT [Submission Date]
             , [session_user_id]
-                FROM [spring_2014_blended].[dbo].[Video Views]
+                FROM [Video Views]
                 WHERE [Lab Number] {0}
             ) as srctable
             PIVOT
@@ -153,64 +90,48 @@ class Data:
             FOR [Submission Date] in {1}
             ) as pivottable""".format(labs, get_pivot_date_range(self.raw_data, 119))
             return query
-
-
-
+            '''
+            query = """
+            SET NOCOUNT ON
+            select *
+            from
+            (
+            SELECT [Submission Date]
+            , [session_user_id]
+                FROM [Video Views]
+                WHERE [Lab Number] {0}
+            ) as srctable
+            PIVOT
+            (
+            count([Submission Date])
+            FOR [Submission Date] in {1}
+            ) as pivottable""".format(labs, daterange)
+            return query
 
         # Get Data, return single dataframe
-        Spring_Date_pivot_labs = pd.read_sql(_pivot_query('=-1'), engine).transpose()[1:119].transpose()
-        Spring_Date_pivot_lect = pd.read_sql(_pivot_query('>-1'), engine).transpose()[1:119].transpose()
+        Spring_Date_pivot_labs = pd.read_sql(_pivot_query('=-1'), engine).transpose()[1:semester_day_count].transpose()
+        Spring_Date_pivot_lect = pd.read_sql(_pivot_query('>-1'), engine).transpose()[1:semester_day_count].transpose()
         
         return pd.DataFrame({'Lecture':Spring_Date_pivot_labs.sum()
                                         ,'Laboratory':Spring_Date_pivot_lect.sum()})
 
 
-def get_xlabels(weeks):
-    """
-    generates x labels for the
-    number of weeks in the 
-    semester.
-    """
-    
-    x = []
-    for n,i in enumerate(np.zeros(weeks*7)):
-        if n%7==0:
-            x.append('week '+str(int(n/7.0+1)))
-        else:
-            x.append('')
-    
-    return x
+    def fraction_per_video_df(self):
 
-x = get_xlabels(15)
+        """
+        This method returns a dataframe containing the fraction of students
+        accessing each video, by video order, and the number of accesses 
+        of each video by video order.
 
-def savefigure(figureobj, name, filetype='.png'):
-    fig = figureobj #plt.gcf()
-    #fig.savefig('/images/'+name)
-    fig.savefig("C:\Users\Administrator\Google Drive\code learning\VideoLectureReporting\VideoLectureReporting\images\\" + name + filetype)
-    
+        Maybe change the 
+        """
 
-# plot video accesses
-timeline_df = Spring_timeline[1:]
 
-# get total number of videos accessed
-N_video = timeline_df.sum()[0]+timeline_df.sum()[1]
+############################################
 
-ax = timeline_df.plot(kind='bar', figsize=(18,5), color=('crimson','0.75'), grid=False, width=1.0, edgecolor='white')
-fig = ax.get_figure()
-ax.set_xticklabels(x)
-ax.set_title(r'Fall 2013 Video Accesses ($N_{Accesses}$='+str(N_video)+')')
-ax.set_ylabel('N Accesses')
-#ax.plot(labs, 'v', markersize=50, color='yellow')
-ax.legend( loc='upper right')
-#ax.plot(exams, 'v', markersize=25, color='black')
 
-#ax.set_ylim(0,600)
-#ax.text(54.5, 50, 'Fall\nBreak', bbox={'facecolor':'white', 'alpha':1.0, 'pad':5})
-ax.set_title(r'Fall 2013 Video Accesses ($N_{Accesses}$='+str(int(N_video))+')')
-ax.set_ylabel('N Accesses')
-savefigure(plt.gcf(),'timeline')#,'.svg')
-plt.close(fig)
 
+'''
 
 # In[5]:
 
@@ -594,9 +515,15 @@ cbar.ax.set_ylabel('Access Count')
 #plt.legend(['Lab Video', 'Midterm Exam', 'Lab Due Date'], loc='upper left')#,bbox_to_anchor=(1.05, 1), borderaxespad=0.)
 
 savefigure(plt.gcf(),'heatmap')#,'.svg')
+'''
+####################################################
 
 
 if __name__ == "__main__":
-    engine = sqlalchemy.create_engine('mssql://WIN-2TMF2VILQ8A/spring_2014_blended?trusted_connection=yes')
+    
+    #engine = sqlalchemy.create_engine('mssql://WIN-2TMF2VILQ8A/spring_2014_blended?trusted_connection=yes')
+    db.choose_database()
+    engine = db.engine
     do = Data(engine)
-    do.raw_data.head(5)
+    #print do.raw_data.head(5)
+    print do.timeline_df().head(5)
